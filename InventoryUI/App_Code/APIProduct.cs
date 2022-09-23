@@ -22,7 +22,24 @@ public class APIProduct
     {
 
         List<csProduct> products = new List<csProduct>();
-        string apiUrl = "https://localhost:7251/api/Products";
+        string apiUrl = "https://localhost:7251/api/SP_Product/" + "";
+
+        HttpClient client = new HttpClient();
+        HttpResponseMessage response = client.GetAsync(apiUrl).Result;
+
+        if (response.IsSuccessStatusCode)
+        {
+            products = JsonConvert.DeserializeObject<List<csProduct>>(response.Content.ReadAsStringAsync().Result);
+        }
+
+        return products;
+    }
+
+    public static List<csProduct> GetProductsBySearch(string search)
+    {
+
+        List<csProduct> products = new List<csProduct>();
+        string apiUrl = "https://localhost:7251/api/SP_Product/" + search;
 
         HttpClient client = new HttpClient();
         HttpResponseMessage response = client.GetAsync(apiUrl).Result;

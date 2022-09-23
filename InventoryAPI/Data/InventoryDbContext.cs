@@ -15,6 +15,7 @@ namespace InventoryAPI.Data
         public DbSet<SP_UserInfo> SP_UserInfo { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<UserInfo> UserInfo { get; set; }
+        public DbSet<InventoryAPI.Models.SP.SP_Product> SP_Product { get; set; }
 
        
     }

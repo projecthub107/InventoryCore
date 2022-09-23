@@ -113,6 +113,17 @@
             <h3 class="page-header">Product List</h3>
         </div>
         <div class="col-lg-12">
+            <div class="form-inline">
+                <div class="form-group">
+                    <label>Product:</label>
+                    <asp:TextBox ID="txtProductSearch" runat="server" CssClass="form-control"></asp:TextBox>
+                </div>
+                <asp:Button ID="btnSearch" runat="server" CssClass="btn btn-success" Text="Search" OnClick="btnSearch_Click" />
+                <asp:Button ID="btnReset" runat="server" CssClass="btn btn-danger" Text="Reset" OnClick="btnReset_Click" />               
+            </div>
+        </div>
+        <br />
+        <div class="col-lg-12">
             <asp:GridView ID="grdProductList" runat="server" AutoGenerateColumns="True" DataKeyNames="ProductId"
                 Width="80%" CssClass="table table-striped table-bordered table-hover mGrid">
                 <PagerStyle CssClass="pgr" />

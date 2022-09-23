@@ -30,11 +30,12 @@ public partial class dashboard : System.Web.UI.Page
             DataClassesDataContext _db = new DataClassesDataContext();
             int nClientId = Convert.ToInt32(ConfigurationManager.AppSettings["client_id"]);
 
-           
+
             TotalCount(nClientId);
 
             // Web API CAll
-            grdProductList.DataSource = APIProduct.GetProducts().Take(5).ToList();
+            grdProductList.DataSource = APIProduct.GetProductsBySearch(txtProductSearch.Text).Take(5).ToList();
+            //APIProduct.GetProducts().Take(5).ToList();
             grdProductList.DataBind();
 
             grdUserList.DataSource = APIUser.GetUsers().Take(5).ToList();
@@ -43,7 +44,7 @@ public partial class dashboard : System.Web.UI.Page
         }
     }
 
-   
+
 
     protected void TotalCount(int nClientId)
     {
@@ -74,5 +75,18 @@ public partial class dashboard : System.Web.UI.Page
         lblTransferInventoryCount.Text = nTransferInventoryCount.ToString();
     }
 
+    protected void btnSearch_Click(object sender, EventArgs e)
+    {
 
+        grdProductList.DataSource = APIProduct.GetProductsBySearch(txtProductSearch.Text).ToList();
+        grdProductList.DataBind();
+    }
+
+    protected void btnReset_Click(object sender, EventArgs e)
+    {
+        txtProductSearch.Text = "";
+        grdProductList.DataSource = APIProduct.GetProductsBySearch(txtProductSearch.Text).Take(5).ToList();
+        //APIProduct.GetProducts().Take(5).ToList();
+        grdProductList.DataBind();
+    }
 }
