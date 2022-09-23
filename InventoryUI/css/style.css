@@ -1,0 +1,54 @@
+﻿.mdc-text-field__input {
+    padding-top: 5px;
+}
+
+.mdc-text-field--upgraded:not(.mdc-text-field--fullwidth):not(.mdc-text-field--box) {
+    margin-top: 9px;
+}
+
+.noCSS {
+    border: 0 none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+    .noCSS table td {
+        border: none !important;
+    }
+
+    .noCSS td {
+        border: none !important;
+    }
+
+    .mGrid .pgr table {
+        margin: 5px 0;
+    }
+
+    .mGrid .pgr td {
+        border-width: 0;
+        padding: 0 6px;
+        border-left: solid 1px #c1c1c1;
+        font-weight: bold;
+        color: #fff;
+        line-height: 12px;
+    }
+
+    .mGrid .pgr a {
+        color: #fff;
+        text-decoration: none;
+        background-color: #aaa;
+        padding: 2px 8px;
+        border-radius: 20px;
+    }
+
+    .mGrid .pgr span {
+        background-color: #1574c4;
+        padding: 2px 8px;
+        border-radius: 20px;
+    }
+
+    .mGrid .pgr a:hover {
+        color: #fff;
+        text-decoration: none;
+        background-color: #f05a46;
+    }

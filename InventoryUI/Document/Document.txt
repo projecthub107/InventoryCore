@@ -1,0 +1,21 @@
+﻿
+RoleId  Name 
+1		Admin
+2		
+3		
+4		
+7		
+8		
+
+Transaction Type
+1	New Stock
+2	Usable Return
+3	Unusable Return
+4	Customer Sale
+5	Damaged Stock
+6	Transfer In
+7	Transfer Out
+
+Login >>
+User: admin@e2r.com
+Pass: e@r107
