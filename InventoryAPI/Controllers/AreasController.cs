@@ -12,49 +12,47 @@ namespace InventoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class AreasController : ControllerBase
     {
         private readonly InventoryDbContext _context;
 
-        public ProductsController(InventoryDbContext context)
+        public AreasController(InventoryDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Products
+        // GET: api/Areas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
+        public async Task<ActionResult<IEnumerable<Area>>> GetArea()
         {
-          
-            var list = await _context.Product.ToListAsync();
-            return list;
+            return await _context.Area.ToListAsync();
         }
 
-        // GET: api/Products/5
+        // GET: api/Areas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<Area>> GetArea(int id)
         {
-            var product = await _context.Product.FindAsync(id);
+            var area = await _context.Area.FindAsync(id);
 
-            if (product == null)
+            if (area == null)
             {
                 return NotFound();
             }
 
-            return product;
+            return area;
         }
 
-        // PUT: api/Products/5
+        // PUT: api/Areas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutArea(int id, Area area)
         {
-            if (id != product.ProductId)
+            if (id != area.AreaId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            _context.Entry(area).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +60,7 @@ namespace InventoryAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!AreaExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +73,36 @@ namespace InventoryAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
+        // POST: api/Areas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Area>> PostArea(Area area)
         {
-            _context.Product.Add(product);
+            _context.Area.Add(area);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            return CreatedAtAction("GetArea", new { id = area.AreaId }, area);
         }
 
-        // DELETE: api/Products/5
+        // DELETE: api/Areas/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteArea(int id)
         {
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
+            var area = await _context.Area.FindAsync(id);
+            if (area == null)
             {
                 return NotFound();
             }
 
-            _context.Product.Remove(product);
+            _context.Area.Remove(area);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ProductExists(int id)
+        private bool AreaExists(int id)
         {
-            return _context.Product.Any(e => e.ProductId == id);
+            return _context.Area.Any(e => e.AreaId == id);
         }
     }
 }

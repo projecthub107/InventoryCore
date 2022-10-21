@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryAPI", "InventoryAP
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "InventoryUI", "InventoryUI\", "{D9395529-AA46-4E08-ABDB-3A3D9B9DD56F}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_5770"
 		Debug.AspNetCompiler.PhysicalPath = "InventoryUI\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_5770\"

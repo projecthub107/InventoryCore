@@ -16,7 +16,9 @@ namespace InventoryAPI.Data
         public DbSet<Product> Product { get; set; }
         public DbSet<UserInfo> UserInfo { get; set; }
         public DbSet<InventoryAPI.Models.SP.SP_Product> SP_Product { get; set; }
+        public DbSet<InventoryAPI.Models.Area> Area { get; set; }
+        public DbSet<InventoryAPI.Models.ClientInfo> ClientInfo { get; set; }
 
-       
+
     }
 }

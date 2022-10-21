@@ -12,49 +12,47 @@ namespace InventoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class ClientInfosController : ControllerBase
     {
         private readonly InventoryDbContext _context;
 
-        public ProductsController(InventoryDbContext context)
+        public ClientInfosController(InventoryDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Products
+        // GET: api/ClientInfo
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
+        public async Task<ActionResult<IEnumerable<ClientInfo>>> GetClientInfo()
         {
-          
-            var list = await _context.Product.ToListAsync();
-            return list;
+            return await _context.ClientInfo.ToListAsync();
         }
 
-        // GET: api/Products/5
+        // GET: api/ClientInfo/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<ClientInfo>> GetClirntInfo(int id)
         {
-            var product = await _context.Product.FindAsync(id);
+            var clientInfo = await _context.ClientInfo.FindAsync(id);
 
-            if (product == null)
+            if (clientInfo == null)
             {
                 return NotFound();
             }
 
-            return product;
+            return clientInfo;
         }
 
-        // PUT: api/Products/5
+        // PUT: api/Areas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutClientInfo(int id, ClientInfo clientInfo)
         {
-            if (id != product.ProductId)
+            if (id != clientInfo.ClientId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            _context.Entry(clientInfo).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +60,7 @@ namespace InventoryAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!ClientInfoExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +73,36 @@ namespace InventoryAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
+        // POST: api/Areas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Area>> PostClientInfo(ClientInfo clientInfo)
         {
-            _context.Product.Add(product);
+            _context.ClientInfo.Add(clientInfo);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            return CreatedAtAction("GetClientInfo", new { id = clientInfo.ClientId }, clientInfo);
         }
 
-        // DELETE: api/Products/5
+        // DELETE: api/Areas/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteClientInfo(int id)
         {
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
+            var clientInfo = await _context.ClientInfo.FindAsync(id);
+            if (clientInfo == null)
             {
                 return NotFound();
             }
 
-            _context.Product.Remove(product);
+            _context.ClientInfo.Remove(clientInfo);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ProductExists(int id)
+        private bool ClientInfoExists(int id)
         {
-            return _context.Product.Any(e => e.ProductId == id);
+            return _context.ClientInfo.Any(e => e.ClientId == id);
         }
     }
 }
