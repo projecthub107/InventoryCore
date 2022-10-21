@@ -119,7 +119,9 @@
                     <asp:TextBox ID="txtProductSearch" runat="server" CssClass="form-control"></asp:TextBox>
                 </div>
                 <asp:Button ID="btnSearch" runat="server" CssClass="btn btn-success" Text="Search" OnClick="btnSearch_Click" />
-                <asp:Button ID="btnReset" runat="server" CssClass="btn btn-danger" Text="Reset" OnClick="btnReset_Click" />               
+                <asp:Button ID="btnReset" runat="server" CssClass="btn btn-danger" Text="Reset" OnClick="btnReset_Click" />    
+                <asp:Button ID="btn" runat="server" CssClass="btn btn-success" Text="Search" OnClick="btnSearch_Click" />
+
             </div>
         </div>
         <br />

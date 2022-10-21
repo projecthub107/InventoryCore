@@ -22,14 +22,15 @@ public class APIProduct
     {
 
         List<csProduct> products = new List<csProduct>();
-        string apiUrl = "https://localhost:7251/api/SP_Product/" + "";
+        string apiUrl = "https://localhost:7251/api/SP_Product";
 
         HttpClient client = new HttpClient();
         HttpResponseMessage response = client.GetAsync(apiUrl).Result;
 
         if (response.IsSuccessStatusCode)
         {
-            products = JsonConvert.DeserializeObject<List<csProduct>>(response.Content.ReadAsStringAsync().Result);
+            var Result = response.Content.ReadAsStringAsync().Result;
+            products = JsonConvert.DeserializeObject<List<csProduct>>(Result);
         }
 
         return products;
@@ -46,7 +47,29 @@ public class APIProduct
 
         if (response.IsSuccessStatusCode)
         {
-            products = JsonConvert.DeserializeObject<List<csProduct>>(response.Content.ReadAsStringAsync().Result);
+            var Result = response.Content.ReadAsStringAsync().Result;
+            products = JsonConvert.DeserializeObject<List<csProduct>>(Result);
+        }
+
+        return products;
+    }
+
+    public static List<csProduct> InertProduct(SP_Product Product)
+    {
+        var jcProduct = JsonConvert.SerializeObject(Product);
+
+        StringContent httpConent = new StringContent(jcProduct, Encoding.UTF8);
+
+        List<csProduct> products = new List<csProduct>();
+        string apiUrl = "https://localhost:7251/api/SP_Product/";
+
+        HttpClient client = new HttpClient();
+        HttpResponseMessage response = client.PostAsync(apiUrl, httpConent).Result;
+
+        if (response.IsSuccessStatusCode)
+        {
+            var Result = response.Content.ReadAsStringAsync().Result;
+            products = JsonConvert.DeserializeObject<List<csProduct>>(Result);
         }
 
         return products;

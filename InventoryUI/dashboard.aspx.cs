@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -34,8 +35,8 @@ public partial class dashboard : System.Web.UI.Page
             TotalCount(nClientId);
 
             // Web API CAll
-            grdProductList.DataSource = APIProduct.GetProductsBySearch(txtProductSearch.Text).Take(5).ToList();
-            //APIProduct.GetProducts().Take(5).ToList();
+            string search = txtProductSearch.Text;
+            grdProductList.DataSource = APIProduct.GetProductsBySearch(search).Take(5).ToList();            
             grdProductList.DataBind();
 
             grdUserList.DataSource = APIUser.GetUsers().Take(5).ToList();
@@ -77,16 +78,32 @@ public partial class dashboard : System.Web.UI.Page
 
     protected void btnSearch_Click(object sender, EventArgs e)
     {
-
-        grdProductList.DataSource = APIProduct.GetProductsBySearch(txtProductSearch.Text).ToList();
+        string search = txtProductSearch.Text;
+        grdProductList.DataSource = APIProduct.GetProductsBySearch(search).ToList();
         grdProductList.DataBind();
     }
 
     protected void btnReset_Click(object sender, EventArgs e)
-    {
+    {       
         txtProductSearch.Text = "";
-        grdProductList.DataSource = APIProduct.GetProductsBySearch(txtProductSearch.Text).Take(5).ToList();
-        //APIProduct.GetProducts().Take(5).ToList();
+        
+        grdProductList.DataSource = APIProduct.GetProducts().Take(5).ToList();        
         grdProductList.DataBind();
     }
+
+    protected void btnAdd_Click(object sender, EventArgs e)
+    {
+        SP_Product objPrd = new SP_Product();
+         objPrd.ProductCode = "Test100";
+        objPrd.ProductName = "Test Product";      
+       
+        
+       
+       
+
+        APIProduct.InertProduct(objPrd).ToList();
+        grdProductList.DataBind();
+    }
+
+    
 }

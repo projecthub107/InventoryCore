@@ -29,7 +29,8 @@ public class APIUser
 
         if (response.IsSuccessStatusCode)
         {
-            users = JsonConvert.DeserializeObject<List<csUsers>>(response.Content.ReadAsStringAsync().Result);
+            var Result = response.Content.ReadAsStringAsync().Result;
+            users = JsonConvert.DeserializeObject<List<csUsers>>(Result);
         }
 
         return users;
