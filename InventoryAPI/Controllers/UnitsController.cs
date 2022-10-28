@@ -12,49 +12,47 @@ namespace InventoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class UnitsController : ControllerBase
     {
         private readonly InventoryDbContext _context;
 
-        public ProductsController(InventoryDbContext context)
+        public UnitsController(InventoryDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Products
+        // GET: api/Units
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
+        public async Task<ActionResult<IEnumerable<Unit>>> GetUnit()
         {
-          
-            var list = await _context.Product.ToListAsync();
-            return list;
+            return await _context.Unit.ToListAsync();
         }
 
-        // GET: api/Products/5
+        // GET: api/Units/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<Unit>> GetUnit(int id)
         {
-            var product = await _context.Product.FindAsync(id);
+            var unit = await _context.Unit.FindAsync(id);
 
-            if (product == null)
+            if (unit == null)
             {
                 return NotFound();
             }
 
-            return product;
+            return unit;
         }
 
-        // PUT: api/Products/5
+        // PUT: api/Units/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutUnit(int id, Unit unit)
         {
-            if (id != product.ProductId)
+            if (id != unit.UnitId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            _context.Entry(unit).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +60,7 @@ namespace InventoryAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!UnitExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +73,36 @@ namespace InventoryAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
+        // POST: api/Units
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Unit>> PostUnit(Unit unit)
         {
-            _context.Product.Add(product);
+            _context.Unit.Add(unit);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            return CreatedAtAction("GetUnit", new { id = unit.UnitId }, unit);
         }
 
-        // DELETE: api/Products/5
+        // DELETE: api/Units/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteUnit(int id)
         {
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
+            var unit = await _context.Unit.FindAsync(id);
+            if (unit == null)
             {
                 return NotFound();
             }
 
-            _context.Product.Remove(product);
+            _context.Unit.Remove(unit);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ProductExists(int id)
+        private bool UnitExists(int id)
         {
-            return _context.Product.Any(e => e.ProductId == id);
+            return _context.Unit.Any(e => e.UnitId == id);
         }
     }
 }

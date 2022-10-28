@@ -12,49 +12,47 @@ namespace InventoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class PreferencesController : ControllerBase
     {
         private readonly InventoryDbContext _context;
 
-        public ProductsController(InventoryDbContext context)
+        public PreferencesController(InventoryDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Products
+        // GET: api/Preferences
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
+        public async Task<ActionResult<IEnumerable<Preferences>>> GetPreferences()
         {
-          
-            var list = await _context.Product.ToListAsync();
-            return list;
+            return await _context.Preferences.ToListAsync();
         }
 
-        // GET: api/Products/5
+        // GET: api/Preferences/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<Preferences>> GetPreferences(int id)
         {
-            var product = await _context.Product.FindAsync(id);
+            var preferences = await _context.Preferences.FindAsync(id);
 
-            if (product == null)
+            if (preferences == null)
             {
                 return NotFound();
             }
 
-            return product;
+            return preferences;
         }
 
-        // PUT: api/Products/5
+        // PUT: api/Preferences/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutPreferences(int id, Preferences preferences)
         {
-            if (id != product.ProductId)
+            if (id != preferences.PreferencesId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            _context.Entry(preferences).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +60,7 @@ namespace InventoryAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!PreferencesExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +73,36 @@ namespace InventoryAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
+        // POST: api/Preferences
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Preferences>> PostPreferences(Preferences preferences)
         {
-            _context.Product.Add(product);
+            _context.Preferences.Add(preferences);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            return CreatedAtAction("GetPreferences", new { id = preferences.PreferencesId }, preferences);
         }
 
-        // DELETE: api/Products/5
+        // DELETE: api/Preferences/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeletePreferences(int id)
         {
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
+            var preferences = await _context.Preferences.FindAsync(id);
+            if (preferences == null)
             {
                 return NotFound();
             }
 
-            _context.Product.Remove(product);
+            _context.Preferences.Remove(preferences);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ProductExists(int id)
+        private bool PreferencesExists(int id)
         {
-            return _context.Product.Any(e => e.ProductId == id);
+            return _context.Preferences.Any(e => e.PreferencesId == id);
         }
     }
 }

@@ -12,49 +12,47 @@ namespace InventoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class HistoriesController : ControllerBase
     {
         private readonly InventoryDbContext _context;
 
-        public ProductsController(InventoryDbContext context)
+        public HistoriesController(InventoryDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Products
+        // GET: api/Histories
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
+        public async Task<ActionResult<IEnumerable<History>>> GetHistory()
         {
-          
-            var list = await _context.Product.ToListAsync();
-            return list;
+            return await _context.History.ToListAsync();
         }
 
-        // GET: api/Products/5
+        // GET: api/Histories/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<History>> GetHistory(int id)
         {
-            var product = await _context.Product.FindAsync(id);
+            var history = await _context.History.FindAsync(id);
 
-            if (product == null)
+            if (history == null)
             {
                 return NotFound();
             }
 
-            return product;
+            return history;
         }
 
-        // PUT: api/Products/5
+        // PUT: api/Histories/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutHistory(int id, History history)
         {
-            if (id != product.ProductId)
+            if (id != history.HistoryId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            _context.Entry(history).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +60,7 @@ namespace InventoryAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!HistoryExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +73,36 @@ namespace InventoryAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
+        // POST: api/Histories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<History>> PostHistory(History history)
         {
-            _context.Product.Add(product);
+            _context.History.Add(history);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            return CreatedAtAction("GetHistory", new { id = history.HistoryId }, history);
         }
 
-        // DELETE: api/Products/5
+        // DELETE: api/Histories/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteHistory(int id)
         {
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
+            var history = await _context.History.FindAsync(id);
+            if (history == null)
             {
                 return NotFound();
             }
 
-            _context.Product.Remove(product);
+            _context.History.Remove(history);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ProductExists(int id)
+        private bool HistoryExists(int id)
         {
-            return _context.Product.Any(e => e.ProductId == id);
+            return _context.History.Any(e => e.HistoryId == id);
         }
     }
 }

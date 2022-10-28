@@ -12,49 +12,47 @@ namespace InventoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class CountriesController : ControllerBase
     {
         private readonly InventoryDbContext _context;
 
-        public ProductsController(InventoryDbContext context)
+        public CountriesController(InventoryDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Products
+        // GET: api/Countries
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
+        public async Task<ActionResult<IEnumerable<Country>>> GetCountry()
         {
-          
-            var list = await _context.Product.ToListAsync();
-            return list;
+            return await _context.Country.ToListAsync();
         }
 
-        // GET: api/Products/5
+        // GET: api/Countries/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<Country>> GetCountry(int id)
         {
-            var product = await _context.Product.FindAsync(id);
+            var country = await _context.Country.FindAsync(id);
 
-            if (product == null)
+            if (country == null)
             {
                 return NotFound();
             }
 
-            return product;
+            return country;
         }
 
-        // PUT: api/Products/5
+        // PUT: api/Countries/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutCountry(int id, Country country)
         {
-            if (id != product.ProductId)
+            if (id != country.CountryId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            _context.Entry(country).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +60,7 @@ namespace InventoryAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!CountryExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +73,36 @@ namespace InventoryAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
+        // POST: api/Countries
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Country>> PostCountry(Country country)
         {
-            _context.Product.Add(product);
+            _context.Country.Add(country);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            return CreatedAtAction("GetCountry", new { id = country.CountryId }, country);
         }
 
-        // DELETE: api/Products/5
+        // DELETE: api/Countries/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteCountry(int id)
         {
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
+            var country = await _context.Country.FindAsync(id);
+            if (country == null)
             {
                 return NotFound();
             }
 
-            _context.Product.Remove(product);
+            _context.Country.Remove(country);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ProductExists(int id)
+        private bool CountryExists(int id)
         {
-            return _context.Product.Any(e => e.ProductId == id);
+            return _context.Country.Any(e => e.CountryId == id);
         }
     }
 }

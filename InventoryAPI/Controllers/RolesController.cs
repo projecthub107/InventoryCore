@@ -12,49 +12,47 @@ namespace InventoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class RolesController : ControllerBase
     {
         private readonly InventoryDbContext _context;
 
-        public ProductsController(InventoryDbContext context)
+        public RolesController(InventoryDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Products
+        // GET: api/Roles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
+        public async Task<ActionResult<IEnumerable<Role>>> GetRole()
         {
-          
-            var list = await _context.Product.ToListAsync();
-            return list;
+            return await _context.Role.ToListAsync();
         }
 
-        // GET: api/Products/5
+        // GET: api/Roles/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<Role>> GetRole(int id)
         {
-            var product = await _context.Product.FindAsync(id);
+            var role = await _context.Role.FindAsync(id);
 
-            if (product == null)
+            if (role == null)
             {
                 return NotFound();
             }
 
-            return product;
+            return role;
         }
 
-        // PUT: api/Products/5
+        // PUT: api/Roles/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutRole(int id, Role role)
         {
-            if (id != product.ProductId)
+            if (id != role.RoleId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            _context.Entry(role).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +60,7 @@ namespace InventoryAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!RoleExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +73,36 @@ namespace InventoryAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
+        // POST: api/Roles
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Role>> PostRole(Role role)
         {
-            _context.Product.Add(product);
+            _context.Role.Add(role);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            return CreatedAtAction("GetRole", new { id = role.RoleId }, role);
         }
 
-        // DELETE: api/Products/5
+        // DELETE: api/Roles/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteRole(int id)
         {
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
+            var role = await _context.Role.FindAsync(id);
+            if (role == null)
             {
                 return NotFound();
             }
 
-            _context.Product.Remove(product);
+            _context.Role.Remove(role);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ProductExists(int id)
+        private bool RoleExists(int id)
         {
-            return _context.Product.Any(e => e.ProductId == id);
+            return _context.Role.Any(e => e.RoleId == id);
         }
     }
 }

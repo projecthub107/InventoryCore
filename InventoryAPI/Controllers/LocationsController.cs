@@ -12,49 +12,47 @@ namespace InventoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class LocationsController : ControllerBase
     {
         private readonly InventoryDbContext _context;
 
-        public ProductsController(InventoryDbContext context)
+        public LocationsController(InventoryDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Products
+        // GET: api/Locations
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
+        public async Task<ActionResult<IEnumerable<Location>>> GetLocation()
         {
-          
-            var list = await _context.Product.ToListAsync();
-            return list;
+            return await _context.Location.ToListAsync();
         }
 
-        // GET: api/Products/5
+        // GET: api/Locations/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<Location>> GetLocation(int id)
         {
-            var product = await _context.Product.FindAsync(id);
+            var location = await _context.Location.FindAsync(id);
 
-            if (product == null)
+            if (location == null)
             {
                 return NotFound();
             }
 
-            return product;
+            return location;
         }
 
-        // PUT: api/Products/5
+        // PUT: api/Locations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutLocation(int id, Location location)
         {
-            if (id != product.ProductId)
+            if (id != location.LocationId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            _context.Entry(location).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +60,7 @@ namespace InventoryAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!LocationExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +73,36 @@ namespace InventoryAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
+        // POST: api/Locations
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Location>> PostLocation(Location location)
         {
-            _context.Product.Add(product);
+            _context.Location.Add(location);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            return CreatedAtAction("GetLocation", new { id = location.LocationId }, location);
         }
 
-        // DELETE: api/Products/5
+        // DELETE: api/Locations/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteLocation(int id)
         {
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
+            var location = await _context.Location.FindAsync(id);
+            if (location == null)
             {
                 return NotFound();
             }
 
-            _context.Product.Remove(product);
+            _context.Location.Remove(location);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ProductExists(int id)
+        private bool LocationExists(int id)
         {
-            return _context.Product.Any(e => e.ProductId == id);
+            return _context.Location.Any(e => e.LocationId == id);
         }
     }
 }

@@ -12,49 +12,47 @@ namespace InventoryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class MenuItemsController : ControllerBase
     {
         private readonly InventoryDbContext _context;
 
-        public ProductsController(InventoryDbContext context)
+        public MenuItemsController(InventoryDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Products
+        // GET: api/MenuItems
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
+        public async Task<ActionResult<IEnumerable<MenuItem>>> GetMenuItem()
         {
-          
-            var list = await _context.Product.ToListAsync();
-            return list;
+            return await _context.MenuItem.ToListAsync();
         }
 
-        // GET: api/Products/5
+        // GET: api/MenuItems/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<ActionResult<MenuItem>> GetMenuItem(int id)
         {
-            var product = await _context.Product.FindAsync(id);
+            var menuItem = await _context.MenuItem.FindAsync(id);
 
-            if (product == null)
+            if (menuItem == null)
             {
                 return NotFound();
             }
 
-            return product;
+            return menuItem;
         }
 
-        // PUT: api/Products/5
+        // PUT: api/MenuItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProduct(int id, Product product)
+        public async Task<IActionResult> PutMenuItem(int id, MenuItem menuItem)
         {
-            if (id != product.ProductId)
+            if (id != menuItem.MenuId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            _context.Entry(menuItem).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +60,7 @@ namespace InventoryAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!MenuItemExists(id))
                 {
                     return NotFound();
                 }
@@ -75,36 +73,36 @@ namespace InventoryAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
+        // POST: api/MenuItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<MenuItem>> PostMenuItem(MenuItem menuItem)
         {
-            _context.Product.Add(product);
+            _context.MenuItem.Add(menuItem);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            return CreatedAtAction("GetMenuItem", new { id = menuItem.MenuId }, menuItem);
         }
 
-        // DELETE: api/Products/5
+        // DELETE: api/MenuItems/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteMenuItem(int id)
         {
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
+            var menuItem = await _context.MenuItem.FindAsync(id);
+            if (menuItem == null)
             {
                 return NotFound();
             }
 
-            _context.Product.Remove(product);
+            _context.MenuItem.Remove(menuItem);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ProductExists(int id)
+        private bool MenuItemExists(int id)
         {
-            return _context.Product.Any(e => e.ProductId == id);
+            return _context.MenuItem.Any(e => e.MenuId == id);
         }
     }
 }
