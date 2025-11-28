@@ -41,6 +41,22 @@ builder.Services.AddScoped<IUnitRepository, UnitRepository>();
 builder.Services.AddScoped<IUserInfoRepository, UserInfoRepository>();
 
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
+builder.Services.AddScoped<IAreaService, AreaService>();
+builder.Services.AddScoped<IClientInfoService, ClientInfoService>();
+builder.Services.AddScoped<ICountryService, CountryService>();
+builder.Services.AddScoped<IHistoryService, HistoryService>();
+builder.Services.AddScoped<ILocationService, LocationService>();
+builder.Services.AddScoped<IManufacturerService, ManufacturerService>();
+builder.Services.AddScoped<IMenuItemService, MenuItemService>();
+builder.Services.AddScoped<IPreferencesService, PreferencesService>();
+builder.Services.AddScoped<IProductTransactionService, ProductTransactionService>();
+builder.Services.AddScoped<IQuestionsService, QuestionsService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IRoleRightService, RoleRightService>();
+builder.Services.AddScoped<ITransactionTypeService, TransactionTypeService>();
+builder.Services.AddScoped<IUnitService, UnitService>();
+builder.Services.AddScoped<IUserInfoService, UserInfoService>();
 
 builder.Services.AddCors((setup) =>
 {
