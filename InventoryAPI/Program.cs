@@ -1,6 +1,10 @@
 ﻿using InventoryAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using InventoryAPI.Controllers;
+using InventoryAPI.Repository.Interface;
+using InventoryAPI.Repository;
+using InventoryAPI.Services.IServices;
+using InventoryAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +18,12 @@ builder.Services.AddSwaggerGen();
 // Inject Dbcontext
 builder.Services.AddDbContext<InventoryDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("InventoryDBConnectionString")));
+
+
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddCors((setup) =>
 {
