@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using InventoryAPI.Data;
 using InventoryAPI.Models;
+using InventoryAPI.Services.IServices;
+using InventoryAPI.Services;
 
 namespace InventoryAPI.Controllers
 {
@@ -14,26 +16,83 @@ namespace InventoryAPI.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
+        
         private readonly InventoryDbContext _context;
+        private readonly IProductService _productService;
 
-        public ProductsController(InventoryDbContext context)
+        public ProductsController(InventoryDbContext context, IProductService productService)
         {
             _context = context;
+            _productService = productService;
         }
+
+        //// GET: api/Products
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Product>>> GetProduct([FromQuery] int? clientId)
+        //{
+        //    var products = await _productService.GetProductsAsync(clientId);
+        //    return Ok(products);
+
+        //    //var list = await _context.Product.ToListAsync();
+        //    //return list;
+        //}
 
         // GET: api/Products
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
+        public async Task<IActionResult> GetAll([FromQuery] int? clientId)
         {
-          
-            var list = await _context.Product.ToListAsync();
-            return list;
+            var products = await _productService.GetProductsAsync(clientId);
+            return Ok(products);
+        }
+
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById(int id, [FromQuery] int? clientId)
+        {
+            var product = await _productService.GetByIdAsync(id, clientId);
+            if (product == null) return NotFound();
+
+            return Ok(product);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] Product model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var created = await _productService.CreateAsync(model);
+            return CreatedAtAction(nameof(GetById), new { id = created.ProductId }, created);
+        }
+
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update(int id, [FromBody] Product model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var success = await _productService.UpdateAsync(id, model);
+            if (!success) return NotFound();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var success = await _productService.DeleteAsync(id);
+            if (!success) return NotFound();
+
+            return NoContent();
         }
 
         // GET: api/Products/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
+            
+
             var product = await _context.Product.FindAsync(id);
 
             if (product == null)
