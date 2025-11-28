@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using InventoryAPI.Models;
-using InventoryAPI.Repository;
+using InventoryAPI.Repository.Interface;
 using InventoryAPI.Services.IServices;
 
 namespace InventoryAPI.Services

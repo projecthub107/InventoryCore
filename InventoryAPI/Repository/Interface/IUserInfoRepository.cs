@@ -1,7 +1,6 @@
 ﻿using InventoryAPI.Models;
-using InventoryAPI.Repository.Interface;
 
-namespace InventoryAPI.Repository
+namespace InventoryAPI.Repository.Interface
 {
     public interface IUserInfoRepository : IGenericRepository<UserInfo>
     {
