@@ -20,21 +20,21 @@ namespace InventoryAPI.Services
 
         public async Task<IEnumerable<Product>> GetProductsAsync(int? clientId = null)
         {
-            // You can add extra business rules here later if needed
+            
             var products = await _productRepo.GetAllWithCategoryAsync(clientId);
             return products;
         }
 
         public async Task<Product?> GetByIdAsync(int id, int? clientId = null)
         {
-            // You can enforce clientId filter here if required
+           
             var products = await _productRepo.GetAllWithCategoryAsync(clientId);
             return products.FirstOrDefault(p => p.ProductId == id);
         }
 
         public async Task<Product> CreateAsync(Product model)
         {
-            // Basic business rules / defaults
+           
             var now = DateTime.UtcNow;
             model.CreatedDate = now;
             model.ModifiedDate = now;
@@ -66,7 +66,7 @@ namespace InventoryAPI.Services
             existing.ManufacturerId = model.ManufacturerId;
             existing.Quantity = model.Quantity;
             existing.ImageName = model.ImageName;
-            existing.ClientId = model.ClientId; // if you want this changeable
+            existing.ClientId = model.ClientId; 
             existing.ModifiedBy = model.ModifiedBy;
             existing.ModifiedDate = DateTime.UtcNow;
 
